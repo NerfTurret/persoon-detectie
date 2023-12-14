@@ -39,13 +39,13 @@ def main_debug():
 
 
 def incorrect_usage():
-    print("""Usage:\n\t-d [--debug] : generates video-out\n
-        \t-s [--stream] : takes in a video stream\n
-        \t-f [--frame] : takes in a single frame at a time""")
+    print("""Usage:\n\t-d [--debug]\t:\tgenerates video-out
+    \t-s [--stream]\t:\ttakes in a video stream
+    \t-f [--frame]\t:\ttakes in a single frame at a time""")
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1 or sys.argv[1] == "-h" or sys.argv[1] == "--help":
+    if len(sys.argv) > 1:
         main()
     else:
         incorrect_usage()
