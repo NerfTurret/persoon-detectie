@@ -1,0 +1,2 @@
+FRAME_SIZE = (640, 480)
+EXIT_KEY = 'q'
