@@ -12,28 +12,24 @@ def landmark_tracking(cap: cv.VideoCapture):
                 continue
 
             pos = (0, 0)
-            landmarks = []
-
+            x, y, l = 0, 0, 0
             results = pose.process(frame)
+
             if results.pose_landmarks:
                 mp.solutions.drawing_utils.draw_landmarks(
                     frame, results.pose_landmarks, mp.solutions.pose.POSE_CONNECTIONS)
                 frame_height, frame_width, _ = frame.shape
                 for landmark in results.pose_landmarks.landmark:
-                    landmarks.append((((landmark.x * frame_width) - frame_width/2) * landmark.visibility,
-                                      ((landmark.y * frame_height) - frame_height / 2) * landmark.visibility))
+                    l = len(results.pose_landmarks.landmark)
+                    x += ((landmark.x * frame_width) - frame_width/2) * landmark.visibility
+                    y += ((landmark.y * frame_height) - frame_height / 2) * landmark.visibility
 
-            x, y = 0, 0
-            for lm in landmarks:
-                x += lm[0]
-                y += lm[1]
             if x != 0 and y != 0:
-                l = len(landmarks)
-                pos = (x / l), (y / l)
+                pos = (x / l, y / l)
 
             #TODO Moet per integratie deze waarde gebruiken om de motoren aan te sturen i.p.v. naar de console te
             # printen
-            print(pos)
+            print(f"Position({pos})")
 
             if cv.waitKey(1) & 0xFF == ord('q'):
                 break
@@ -48,24 +44,20 @@ def landmark_tracking_video_out(cap: cv.VideoCapture):
                 continue
 
             pos = (0, 0)
-            landmarks = []
-
+            x, y, l = 0, 0, 0
             results = pose.process(frame)
+
             if results.pose_landmarks:
                 mp.solutions.drawing_utils.draw_landmarks(
                     frame, results.pose_landmarks, mp.solutions.pose.POSE_CONNECTIONS)
                 frame_height, frame_width, _ = frame.shape
                 for landmark in results.pose_landmarks.landmark:
-                    landmarks.append((((landmark.x * frame_width) - frame_width/2) * landmark.visibility,
-                                      ((landmark.y * frame_height) - frame_height / 2) * landmark.visibility))
+                    l = len(results.pose_landmarks.landmark)
+                    x += ((landmark.x * frame_width) - frame_width/2) * landmark.visibility
+                    y += ((landmark.y * frame_height) - frame_height / 2) * landmark.visibility
 
-            x, y = 0, 0
-            for lm in landmarks:
-                x += lm[0]
-                y += lm[1]
             if x != 0 and y != 0:
-                l = len(landmarks)
-                pos = (x / l), (y / l)
+                pos = (x / l, y / l)
 
             cv.namedWindow("main", cv.WINDOW_NORMAL)
             cv.resizeWindow("main", constants.FRAME_SIZE[0], constants.FRAME_SIZE[1])

@@ -16,6 +16,7 @@ def main():
         incorrect_usage()
 
 
+
 def main_frame():
     cap = cv.VideoCapture(0)
 
